@@ -1,0 +1,42 @@
+#!/bin/sh
+
+# sourced at boot by ~/.xinitrc and most display managers
+
+# xdg standard configuration location (needed by some applications)
+export XDG_CONFIG_HOME="$HOME/.config"
+
+# add ~/.local/bin to the PATH (application executables)
+export PATH="$HOME/.local/bin:$PATH"
+
+
+# start the compositor (transparency, fade, shadows, blur, etc.)
+picom -b &
+
+# start the network tray application
+nm-applet &
+
+# start the volume tray application
+volumeicon &
+
+# restore the last wallpaper applied with nitrogen
+nitrogen --restore &
+
+# start gnome policy kit agent (password authentication)
+/usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1 &
+
+# set display timeout, sleep, and poweroff
+xset dpms 600 900 1200
+
+# set keyboard repeat rate
+xset r rate 350 60
+
+
+# slstatus
+slstatus &
+redshift -l 57.154541:24.853809 &
+# left hand mouse
+#xmodmap -e "pointer = 3 2 1"
+ntpd -qG
+spotify &
+xrandr --output eDP --off --output HDMI-A-1 --off --output DisplayPort-3 --off --output DisplayPort-1-0 --off --output DisplayPort-1-1 --off --output DisplayPort-1-2 --off --output HDMI-A-1-0 --primary --mode 1920x1080 --pos 0x0 --rotate normal --set TearFree on
+
